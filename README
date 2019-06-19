@@ -1,0 +1,33 @@
+# Solarwinds Interface
+
+Solarwinds Interface is a tool to interact with the OrionSDK / SolarWinds API. It is designed for internal use by the DTI SA team.
+
+## Installation
+Run pip install -r requirements.txt
+
+import
+
+## Usage
+This project is in its early stages and thus may lack some common functionality you would expect from a full release third-party library. To use:
+	- Download the project folder into a working directory
+	- Place your own runner file in the folder based on the example_runner.py (you can also simply edit example_runner.py to meet your needs) or run an interactive shell on the sw_interface.py file (not tested)
+	- Feel free to load any files in the data folder that you reference in your script. Be sure to change the paths to match the path of your new file
+
+Each function attempts to encapsulate some portion of the logic required to communicate with the OrionSDK API. Specifically:
+
+auth(): Authenticates your session with Solarwinds. You can call this function manually. However, most of the other functions check to see if your swis object has been authenticated already, and calls it if not.
+
+query(query_str): Sends a custom query to Solarwinds and saves its results in the objects own results attribute. This results attribute is used by several functions for normal operations and is actually where the interface will pull its URIs if not already provided.
+
+set_uris(uris): Manually sets the objects uri attribute using a pre-processed list or value. Use this if you already have your URIs and you just want to work with your nodes without performing a new query.
+
+collect_uris(): Creates a list of URIs pulled from the results attribute and assigns them to the uri attribute. You can call this manually, but most functions that require URIs will check for the attribute themselves, and call the function as necessary. You need a results attribute for this to work, so it requires that you first run a query. If you don't need a query, then you probably need set_uris() instead.
+
+suppress_alerts(): Suppresses alerts over a given time span for each node listed in the uri attribute and verifies the suppression state with Solarwinds. 
+
+read_custom_properties(id): Requests the custom properties list for a given node. Currently takes the node's ID as an argument and constructs the URI in house. Returns the custom properties as a json string object.
+
+change_custom_properties(id, updated_properties): Changes the value of a specific custom property in a defined node. Currently takes the node's ID as an argument and constructs the URI in house. Takes a dictionary with each key named for the target custom properties field, and each value representing the new value to be placed in the field.
+
+## Contributing
+Please send any update requests to Adam Ashcraft (adam.ashcraft@delaware.gov)
