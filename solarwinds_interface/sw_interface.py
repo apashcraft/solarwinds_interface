@@ -1,3 +1,4 @@
+"""Provides an object for interacting with the SolarWinds API"""
 from dateutil.parser import parse
 import getpass
 import json
@@ -8,7 +9,7 @@ from requests.packages.urllib3 import disable_warnings
 
 
 class SolarWindsInterface:
-
+    """Defines SolarWinds API object"""
     disable_warnings(InsecureRequestWarning)
 
     def __init__(self, username, password, server):
